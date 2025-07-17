@@ -1,0 +1,492 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>DreamScene Supplementary Videos</title>
+  <style>
+    body { font-family: Arial, sans-serif; max-width: 1200px; margin: 40px auto; line-height: 1.6; }
+    h2 { margin-top: 40px; }
+    .video-row { display: flex; flex-direction: row; gap: 10px; margin-bottom: 20px; }
+    .video-row video { width: 100%; max-width: 230px; height: auto; }
+    .prompt { font-weight: bold; margin-top: 40px; font-size: 18px; }
+  </style>
+  <style>
+    .prompt {
+      font-weight: bold;
+      font-size: 18px;
+      font-style: italic;
+      text-align: center;
+      margin: 40px 0 20px 0;
+    }
+
+    .video-table {
+      display: grid;
+      grid-template-columns: 60px repeat(5, 1fr); /* 左边60px标签 + 5列方法 */
+      gap: 10px;
+      max-width: 1300px;
+      margin: 0 auto;
+    }
+
+    .method-cell {
+      text-align: center;
+      font-weight: bold;
+      font-size: 14px;
+    }
+
+    .method-cell span {
+      display: block;
+      font-weight: normal;
+      font-size: 13px;
+      color: #666;
+      margin-top: 2px;
+    }
+
+    .video-tag {
+      font-weight: bold;
+      font-size: 16px;
+      text-align: right;
+      line-height: 1;
+      align-self: center;
+    }
+
+    .video-table video {
+      width: 100%;
+      height: auto;
+      display: block;
+    }
+    .scene-title {
+      font-size: 28px;         
+      font-weight: 800;        
+      text-align: center;
+      margin: 50px 0 10px 0;
+    }
+    .intro {
+      max-width: 1000px;
+      margin: 40px auto 30px auto;
+      font-size: 16px;
+      line-height: 1.6;
+      text-align: justify;
+      font-family: Arial, sans-serif;
+      }
+      .intro u {
+        text-decoration: underline;
+        font-weight: 500;
+      }
+      .quality-table {
+      display: grid;
+      grid-template-columns: 60px repeat(2, 1fr);  /* 一列标签，两列视频 */
+      gap: 10px;
+      max-width: 700px;
+      margin: 0 auto 60px auto;
+    }
+      .view-table {
+        display: grid;
+        grid-template-columns: 60px 230px 230px;
+        column-gap: 60px;   /* 横向间距：视频之间更分开 */
+        row-gap: 10px;      /* 垂直间距：保留文字与视频距离 */
+        align-items: center;
+        margin: 40px auto;
+        max-width: 700px;
+      }
+
+  
+  .video-wrapper {
+    position: relative;
+    width: 100%;
+    max-width: 230px;
+  }
+
+  .loading-spinner {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 32px;
+    height: 32px;
+    border: 4px solid #ccc;
+    border-top: 4px solid #007acc;
+    border-radius: 50%;
+    animation: spin 0.8s linear infinite;
+    z-index: 1;
+  }
+
+  @keyframes spin {
+    0% { transform: translate(-50%, -50%) rotate(0deg); }
+    100% { transform: translate(-50%, -50%) rotate(360deg); }
+  }
+
+  .video-wrapper video {
+    width: 100%;
+    height: auto;
+    display: block;
+  }
+
+  </style>
+</head>
+<body>
+
+  <h1>Supplementary Results: DreamScene vs Baselines</h1>
+  <div class="intro">
+  This page shows the qualitative comparison of DreamScene against four baselines: Text2Room, Text2NeRF, ProlificDreamer and  Set-the-Scene. For each prompt, we show RGB videos followed by the corresponding depth videos, generated using the official code provided by each method. 
+  We adopt a unified camera trajectory for all methods to enable <strong>fair</strong> and <strong>meaningful</strong> comparison.
+  Specifically, we conduct testing on the same scenes used during training, but replace the original training camera poses
+  with a continuous trajectory that simulates <strong>natural human exploration behavior</strong>: <u><span style="color: #cc0000;">the camera starts from the scene center,
+  first moves along straight paths in multiple directions across the scene, and then performs a circular motion around the center,
+  with the radius of the circular path set to two-thirds of the scene diameter.</span></u> As shown in the videos, inpainting-based methods (e.g., Text2Room and Text2NeRF) resemble stitched panoramas rather than consistent 3D representaions, lacking geometric consistency and often collapsing under novel camera views.
+  ProlificDreamer is designed for object-centric generation and struggles with scene-wide 3D consistency, leading to noticeably degraded rendering quality in complex environments.
+  Set-the-Scene improves structural consistency but remains constrained by the low visual fidelity inherent to SDS-based generation.
+  Crucially, none of these methods support fully automated scene generation or flexible object-level editing.
+  In contrast, DreamScene unifies <strong>automated layout planning, robust 3D structure, high visual quality, and controllable scene editing</strong> into a scalable and practical pipeline.
+  </div>
+
+
+
+
+<details>
+  <summary class="summary-toggle">
+    <span class="summary-text">
+      <strong>Prompt:</strong> <em>"There are many astronauts on the moon."</em> - <em> Click to show videos (loading videos may take a few mintues).</em>
+    </span>
+  </summary>
+
+
+<!-- 方法名 + 时间 -->
+
+<div class="video-table">
+  <!-- 第一行：空 + 方法名 + 时间 -->
+  <div></div>
+  <div class="method-cell">Text2Room<span>13.3h</span></div>
+  <div class="method-cell">Text2NeRF<span>7.5h</span></div>
+  <div class="method-cell">ProlificDreamer<span>12h</span></div>
+  <div class="method-cell">Set-the-Scene<span>1.5h</span></div>
+  <div class="method-cell">DreamScene<span>1.5h</span></div>
+
+  <!-- 第二行：RGB + 视频 -->
+  <div class="video-tag">RGB</div>
+  <div class="video-wrapper">
+  <div class="loading-spinner"></div>
+  <video data-src="videos/space/text2room.mp4" muted loop playsinline preload="none"></video>
+  </div>
+  <div class="video-wrapper">
+  <div class="loading-spinner"></div>
+  <video data-src="videos/space/text2nerf.mp4" muted loop playsinline preload="none"></video>
+  </div>
+  <div class="video-wrapper">
+  <div class="loading-spinner"></div>
+  <video data-src="videos/space/prolificdreamer.mp4" muted loop playsinline preload="none"></video>
+  </div>
+  <div class="video-wrapper">
+  <div class="loading-spinner"></div>
+  <video data-src="videos/space/set-the-scene.mp4" muted loop playsinline preload="none"></video>
+  </div>
+  <div class="video-wrapper">
+  <div class="loading-spinner"></div>
+  <video data-src="videos/space/dreamscene.mp4" muted loop playsinline preload="none"></video>
+  </div>
+
+
+  <!-- 第三行：Depth + 视频 -->
+  <div class="video-tag">Depth</div>
+    <div class="video-wrapper">
+  <div class="loading-spinner"></div>
+  <video data-src="videos/space/text2room_depth.mp4" muted loop playsinline preload="none"></video>
+  </div>
+  <div class="video-wrapper">
+  <div class="loading-spinner"></div>
+  <video data-src="videos/space/text2nerf_depth.mp4" muted loop playsinline preload="none"></video>
+  </div>
+  <div class="video-wrapper">
+  <div class="loading-spinner"></div>
+  <video data-src="videos/space/prolificdreamer_depth.mp4" muted loop playsinline preload="none"></video>
+  </div>
+  <div class="video-wrapper">
+  <div class="loading-spinner"></div>
+  <video data-src="videos/space/set-the-scene_depth.mp4" muted loop playsinline preload="none"></video>
+  </div>
+  <div class="video-wrapper">
+  <div class="loading-spinner"></div>
+  <video data-src="videos/space/dreamscene_depth.mp4" muted loop playsinline preload="none"></video>
+  </div>
+</div>
+</details>
+
+    <!-- Prompt 2 -->
+
+<details>
+  <summary class="summary-toggle">
+    <span class="summary-text">
+      <strong>Prompt:</strong> <em>"An autumn park."</em> - <em>Click to show videos (loading videos may take a few mintues).</em>
+    </span>
+  </summary>
+<div class="video-table">
+  <!-- 第一行：空 + 方法名 + 时间 -->
+  <div></div>
+  <div class="method-cell">Text2Room<span>13.3h</span></div>
+  <div class="method-cell">Text2NeRF<span>7.5h</span></div>
+  <div class="method-cell">ProlificDreamer<span>12h</span></div>
+  <div class="method-cell">Set-the-Scene<span>1.5h</span></div>
+  <div class="method-cell">DreamScene<span>1.5h</span></div>
+
+  <!-- 第二行：RGB + 视频 -->
+  <div class="video-tag">RGB</div>
+  <div class="video-wrapper">
+  <div class="loading-spinner"></div>
+  <video data-src="videos/park/text2room.mp4" muted loop playsinline preload="none"></video>
+  </div>
+  <div class="video-wrapper">
+  <div class="loading-spinner"></div>
+  <video data-src="videos/park/text2nerf.mp4" muted loop playsinline preload="none"></video>
+  </div>
+  <div class="video-wrapper">
+  <div class="loading-spinner"></div>
+  <video data-src="videos/park/prolificdreamer.mp4" muted loop playsinline preload="none"></video>
+  </div>
+  <div class="video-wrapper">
+  <div class="loading-spinner"></div>
+  <video data-src="videos/park/set-the-scene.mp4" muted loop playsinline preload="none"></video>
+  </div>
+  <div class="video-wrapper">
+  <div class="loading-spinner"></div>
+  <video data-src="videos/park/dreamscene.mp4" muted loop playsinline preload="none"></video>
+  </div>
+
+  <!-- 第三行：Depth + 视频 -->
+  <div class="video-tag">Depth</div>
+    <div class="video-wrapper">
+  <div class="loading-spinner"></div>
+  <video data-src="videos/park/text2room_depth.mp4" muted loop playsinline preload="none"></video>
+  </div>
+  <div class="video-wrapper">
+  <div class="loading-spinner"></div>
+  <video data-src="videos/park/text2nerf_depth.mp4" muted loop playsinline preload="none"></video>
+  </div>
+  <div class="video-wrapper">
+  <div class="loading-spinner"></div>
+  <video data-src="videos/park/prolificdreamer_depth.mp4" muted loop playsinline preload="none"></video>
+  </div>
+  <div class="video-wrapper">
+  <div class="loading-spinner"></div>
+  <video data-src="videos/park/set-the-scene_depth.mp4" muted loop playsinline preload="none"></video>
+  </div>
+  <div class="video-wrapper">
+  <div class="loading-spinner"></div>
+  <video data-src="videos/park/dreamscene_depth.mp4" muted loop playsinline preload="none"></video>
+  </div>
+</div>
+</details>
+
+
+<div class="scene-title">Indoor Scene</div>
+  <!-- Prompt 3 -->
+<details>
+  <summary class="summary-toggle">
+    <span class="summary-text">
+      <strong>Prompt:</strong> <em>"A DSLR photo of a modern living room."</em> - <em>Click to show videos (loading videos may take a few mintues).</em>
+    </span>
+  </summary>
+<div class="video-table">
+  <!-- 第一行：空 + 方法名 + 时间 -->
+  <div></div>
+  <div class="method-cell">Text2Room<span>13.3h</span></div>
+  <div class="method-cell">Text2NeRF<span>7.5h</span></div>
+  <div class="method-cell">ProlificDreamer<span>12h</span></div>
+  <div class="method-cell">Set-the-Scene<span>1.5h</span></div>
+  <div class="method-cell">DreamScene<span>1.5h</span></div>
+
+  <!-- 第二行：RGB + 视频 -->
+   <div class="video-tag">RGB</div>
+  <div class="video-wrapper">
+  <div class="loading-spinner"></div>
+  <video data-src="videos/livingroom/text2room.mp4" muted loop playsinline preload="none"></video>
+  </div>
+  <div class="video-wrapper">
+  <div class="loading-spinner"></div>
+  <video data-src="videos/livingroom/text2nerf.mp4" muted loop playsinline preload="none"></video>
+  </div>
+  <div class="video-wrapper">
+  <div class="loading-spinner"></div>
+  <video data-src="videos/livingroom/prolificdreamer.mp4" muted loop playsinline preload="none"></video>
+  </div>
+  <div class="video-wrapper">
+  <div class="loading-spinner"></div>
+  <video data-src="videos/livingroom/set-the-scene.mp4" muted loop playsinline preload="none"></video>
+  </div>
+  <div class="video-wrapper">
+  <div class="loading-spinner"></div>
+  <video data-src="videos/livingroom/dreamscene.mp4" muted loop playsinline preload="none"></video>
+  </div>
+
+
+  <!-- 第三行：Depth + 视频 -->
+  <div class="video-tag">Depth</div>
+    <div class="video-wrapper">
+  <div class="loading-spinner"></div>
+  <video data-src="videos/livingroom/text2room_depth.mp4" muted loop playsinline preload="none"></video>
+  </div>
+  <div class="video-wrapper">
+  <div class="loading-spinner"></div>
+  <video data-src="videos/livingroom/text2nerf_depth.mp4" muted loop playsinline preload="none"></video>
+  </div>
+  <div class="video-wrapper">
+  <div class="loading-spinner"></div>
+  <video data-src="videos/livingroom/prolificdreamer_depth.mp4" muted loop playsinline preload="none"></video>
+  </div>
+  <div class="video-wrapper">
+  <div class="loading-spinner"></div>
+  <video data-src="videos/livingroom/set-the-scene_depth.mp4" muted loop playsinline preload="none"></video>
+  </div>
+  <div class="video-wrapper">
+  <div class="loading-spinner"></div>
+  <video data-src="videos/livingroom/dreamscene_depth.mp4" muted loop playsinline preload="none"></video>
+  </div>
+</div>
+</details>
+
+<details>
+  <summary class="summary-toggle">
+    <span class="summary-text">
+      <strong>Prompt:</strong> <em>"A DSLR photo of a classical bedroom room."</em> - <em>Click to show videos (loading videos may take a few mintues).</em>
+    </span>
+  </summary>
+<div class="video-table">
+  <!-- 第一行：空 + 方法名 + 时间 -->
+  <div></div>
+  <div class="method-cell">Text2Room<span>13.3h</span></div>
+  <div class="method-cell">Text2NeRF<span>7.5h</span></div>
+  <div class="method-cell">ProlificDreamer<span>12h</span></div>
+  <div class="method-cell">Set-the-Scene<span>1.5h</span></div>
+  <div class="method-cell">DreamScene<span>1.5h</span></div>
+
+  <!-- 第二行：RGB + 视频 -->
+  <div class="video-tag">RGB</div>
+  <div class="video-wrapper">
+  <div class="loading-spinner"></div>
+  <video data-src="videos/bedroom/text2room.mp4" muted loop playsinline preload="none"></video>
+  </div>
+  <div class="video-wrapper">
+  <div class="loading-spinner"></div>
+  <video data-src="videos/bedroom/text2nerf.mp4" muted loop playsinline preload="none"></video>
+  </div>
+  <div class="video-wrapper">
+  <div class="loading-spinner"></div>
+  <video data-src="videos/bedroom/prolificdreamer.mp4" muted loop playsinline preload="none"></video>
+  </div>
+  <div class="video-wrapper">
+  <div class="loading-spinner"></div>
+  <video data-src="videos/bedroom/set-the-scene.mp4" muted loop playsinline preload="none"></video>
+  </div>
+  <div class="video-wrapper">
+  <div class="loading-spinner"></div>
+  <video data-src="videos/bedroom/dreamscene.mp4" muted loop playsinline preload="none"></video>
+  </div>
+
+  <!-- 第三行：Depth + 视频 -->
+  <div class="video-tag">Depth</div>
+  <div class="video-wrapper">
+  <div class="loading-spinner"></div>
+  <video data-src="videos/bedroom/text2room_depth.mp4" muted loop playsinline preload="none"></video>
+  </div>
+  <div class="video-wrapper">
+  <div class="loading-spinner"></div>
+  <video data-src="videos/bedroom/text2nerf_depth.mp4" muted loop playsinline preload="none"></video>
+  </div>
+  <div class="video-wrapper">
+  <div class="loading-spinner"></div>
+  <video data-src="videos/bedroom/prolificdreamer_depth.mp4" muted loop playsinline preload="none"></video>
+  </div>
+  <div class="video-wrapper">
+  <div class="loading-spinner"></div>
+  <video data-src="videos/bedroom/set-the-scene_depth.mp4" muted loop playsinline preload="none"></video>
+  </div>
+  <div class="video-wrapper">
+  <div class="loading-spinner"></div>
+  <video data-src="videos/bedroom/dreamscene_depth.mp4" muted loop playsinline preload="none"></video>
+  </div>
+</div>
+</details>
+
+<div class="scene-title">Quality Improvement</div>
+
+<details>
+  <summary class="summary-toggle">
+    <span class="summary-text"><em>Click to show videos (loading videos may take a few mintues).</em></span>
+  </summary>
+
+<div class="video-table view-table">
+  <!-- 方法名 + 时间（仅两列） -->
+  <div></div>
+  <div class="method-cell">DreamScene<br><span>ECCV</span></div>
+  <div class="method-cell">DreamScene<br><span>TPAMI</span></div>
+
+  <!-- RGB 视频 -->
+   
+  <div class="video-tag">RGB</div>
+  <div class="video-wrapper">
+  <div class="loading-spinner"></div>
+  <video data-src="videos/old/space_eccv.mp4" muted loop playsinline preload="none"></video>
+  </div>
+    <div class="video-wrapper">
+  <div class="loading-spinner"></div>
+  <video data-src="videos/old/space.mp4" muted loop playsinline preload="none"></video>
+  </div>
+
+
+  <!-- Depth 视频 -->
+
+</details>
+
+
+
+<div class="scene-title">4D Scene Editing</div>
+
+<details>
+  <summary class="summary-toggle">
+    <span class="summary-text"><em>Click to show videos (loading videos may take a few mintues)</em></span>
+  </summary>
+<div class="video-table view-table">
+  <!-- 方法名行（View1 和 View2） -->
+  <div></div>
+  <div class="method-cell">View 1</div>
+  <div class="method-cell">View 2</div>
+
+  <!-- RGB 视频 -->
+  <div class="video-tag">RGB</div>
+    <div class="video-wrapper">
+  <div class="loading-spinner"></div>
+  <video data-src="videos/4D_editing/outdoor_move_1.mp4" muted loop playsinline preload="none"></video>
+  </div>
+  <div class="video-wrapper">
+  <div class="loading-spinner"></div>
+  <video data-src="videos/4D_editing/outdoor_move_2.mp4" muted loop playsinline preload="none"></video>
+  </div>
+</details>
+
+</div>
+
+<script>
+  const lazyVideos = document.querySelectorAll('.video-wrapper video');
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting) {
+        const video = entry.target;
+        const wrapper = video.parentElement;
+        const spinner = wrapper.querySelector('.loading-spinner');
+
+        video.src = video.dataset.src;
+        video.load();
+
+        video.oncanplaythrough = () => {
+          if (spinner) spinner.style.display = 'none';
+          video.play();
+        };
+
+        observer.unobserve(video);
+      }
+    });
+  }, { threshold: 0.2 });
+
+  lazyVideos.forEach(video => observer.observe(video));
+</script>
+
+</body>
+</html>
